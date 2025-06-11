@@ -1,0 +1,64 @@
+/* Center quiz and create a container */
+.quiz-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+/* Style headings for better hierarchy */
+h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+/* Style choice buttons */
+.choices {
+  list-style-type: none;
+  padding: 0;
+}
+
+button {
+  width: 100%;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+button:hover {
+  background: #f0f0f0;
+  transform: translateY(-2px);
+}
+
+/* Style result screen */
+.result-screen {
+  text-align: center;
+}
+
+.score {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin: 2rem 0;
+}
+
+.passed {
+  color: #27ae60;
+  animation: pop 0.5s;
+}
+
+.failed {
+  color: #e74c3c;
+}
+
+@keyframes pop {
+  50% {
+    transform: scale(1.2);
+  }
+}
