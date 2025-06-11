@@ -1,0 +1,79 @@
+.emoji-translator-container {
+  width: 800px;
+  margin: 1rem auto;
+  padding: 20px;
+  box-shadow: 4px 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  font-size: clamp(16px, 1.4vw + 0.5rem, 24px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.emoji-translator-container div {
+  width: 80%;
+  margin: 1rem auto;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 0.25rem;
+}
+
+.emoji-translator-container input[type="text"] {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75em;
+  outline: none;
+  border: 2px solid #cccccc;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.emoji-translator-container input[type="text"]:focus {
+  border-color: #1a8cff;
+  box-shadow: 0 0 4px rgba(26, 140, 255, 0.5);
+}
+
+.emoji-translator-container span.warning {
+  background-color: rgba(255, 26, 26, 0.5);
+  padding: 0.5rem;
+  font-size: 0.5em;
+  border-radius: 4px;
+}
+
+.emoji-translator-container button {
+  width: 50%;
+  background-color: #3b82f6;
+  color: #f0f0f0;
+  padding: 0.5rem;
+  margin: 1rem auto;
+  align-self: center;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.emoji-translator-container button:hover {
+  background-color: #1a8cff;
+}
+
+.emoji-translator-container button:active {
+  animation: pop 0.2s ease-in-out;
+}
+
+.emoji-translator-container span.output {
+  width: 100%;
+  padding: 20px;
+  font-size: 0.75em;
+  border: 1px solid #1a1a1a;
+  border-radius: 2px;
+  text-align: left;
+}
+
+@keyframes pop {
+  50% {
+    transform: scale(0.95);
+  }
+}

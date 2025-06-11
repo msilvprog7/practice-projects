@@ -1,0 +1,71 @@
+.notes {
+  width: 80%;
+  height: 80vh;
+  font-size: clamp(1rem, 2.5vw, 2rem);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  text-align: left;
+}
+
+.notes .row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.notes a {
+  color: #61dafb;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.notes a:hover {
+  color: #3ba8c9;
+  transition: color 0.2s ease;
+}
+
+.notes button {
+  background-color: #fb8c61;
+  color: white;
+  cursor: pointer;
+  width: clamp(100px, 10vw, 200px);
+  height: clamp(40px, 5vh, 60px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  font-size: clamp(0.75rem, 1.75vw, 1.5rem);
+  margin: 0 2rem;
+}
+
+.notes button:hover {
+  background-color: #e67348;
+  transition: background-color 0.2s ease;
+}
+
+.notes input {
+  font-size: clamp(1rem, 2.5vw, 2rem);
+}
+
+.notes input[type="text"] {
+  margin: 0 2rem;
+}
+
+.notes textarea {
+  width: 50%;
+  height: calc(80vh - 120px);
+  min-height: 300px;
+  max-height: 90vh;
+  overflow-y: auto;
+  font-size: clamp(1rem, 2.5vw, 2rem);
+  resize: none;
+  margin: 1rem 0;
+  padding: 1rem;
+  box-sizing: border-box;
+}

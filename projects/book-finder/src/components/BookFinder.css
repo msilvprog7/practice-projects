@@ -1,0 +1,133 @@
+/* Center on page with rounded, box shadow */
+.book-finder-container {
+  width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+/** Fill most of width with rounded border and highlights on focus */
+.book-finder-container input {
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 4px;
+  width: 70%;
+  margin-right: 1rem;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.book-finder-container input:focus {
+  outline: none;
+  border-color: #2196f3;
+  box-shadow: 0 0 0 2px rgba(22, 150, 243, 0.1);
+}
+
+/* Rounded button with padding and highlights on hover and moves slightly on click */
+.book-finder-container button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.book-finder-container button:hover {
+  background-color: #1976d2;
+}
+
+.book-finder-container button:active {
+  transform: translateY(1px);
+}
+
+/* List should not have style and items should be spaced, rounded, and alternating colors */
+ol {
+  list-style: none;
+}
+
+ol li {
+  padding: 3rem 1.5rem;
+  margin: 1rem 0;
+  border-radius: 4px;
+  transition: background-color 0.2s ease-in-out;
+  display: flex;
+  flex-direction: row;
+}
+
+ol li:hover {
+  background-color: #e0e0e0;
+}
+
+ol li:nth-child(even) {
+  background-color: #f0f0f0;
+}
+
+ol li:nth-child(even):hover {
+  background-color: #dfdfdf;
+}
+
+/* Titles, authors, and published date should be on left */
+ol li div {
+  width: 90%;
+  text-align: left;
+}
+
+.book-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.book-details {
+  flex: 1;
+}
+
+.book-title {
+  font-size: 1.25rem;
+  margin: 0 0 0.5rem 0;
+  color: #333;
+}
+
+.book-authors {
+  font-size: 1rem;
+  color: #666;
+  margin: 0.25rem 0;
+}
+
+.book-published {
+  font-size: 0.875rem;
+  color: #888;
+  margin: 0.25rem 0;
+}
+
+.book-info img {
+  width: 128px;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Preview button links */
+.preview-button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #2196f3;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.preview-button:hover {
+  background-color: #1976d2;
+}
+
+.preview-button:active {
+  transform: translateY(1px);
+}

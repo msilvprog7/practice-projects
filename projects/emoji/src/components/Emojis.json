@@ -1,0 +1,8 @@
+{
+  "entries": [
+    { "words": ["happy"], "emoji": "😊" },
+    { "words": ["sad"], "emoji": "😟" },
+    { "words": ["sunny", "sun"], "emoji": "☀️" },
+    { "words": ["raining", "rainy", "rain"], "emoji": "🌧️" }
+  ]
+}

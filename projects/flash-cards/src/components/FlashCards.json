@@ -1,0 +1,24 @@
+{
+  "cards": [
+    {
+      "question": "What type of proxy anonymizes clients?",
+      "answer": "Forward proxy"
+    },
+    {
+      "question": "What type of proxy aggregates multiple server responses?",
+      "answer": "Reverse proxy"
+    },
+    {
+      "question": "What data structure can be used to find the top k values?",
+      "answer": "Heap or priority queue"
+    },
+    {
+      "question": "What is the name of the minimum number of servers on which a distributed operation needs to be performed successfully before declaring the operation's overall success?",
+      "answer": "Quorum"
+    },
+    {
+      "question": "Which type of storage is best suited for complex transactions like in a banking or financial application? Please explain why.",
+      "answer": "SQL because it is ACID compliant, structured, and supports complex queries."
+    }
+  ]
+}
