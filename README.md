@@ -8,6 +8,10 @@ to practice software engineering skills. It's based on ideas from:
 I tried to spend only a couple of hours on each with the personal
 goal to practice more.
 
+I'm also trying to reinforce concepts. These will have small
+demonstrations with similar goal to practice and reinforce
+the ideas.
+
 ## Setup
 
 Each project has a separate installation.
@@ -17,6 +21,13 @@ React sites follow this setup to run on `https://localhost:3000`:
 ```cmd
 npm install
 npm start
+```
+
+C# projects follow this setup to run console applications:
+
+```cmd
+dotnet build
+dotnet run
 ```
 
 ## Projects
@@ -32,3 +43,9 @@ npm start
 | game-poll    | Work-in-progress app for creating polls with LocalStorage; I'm planning to add an API and database                                                                                                      |
 | notes        | Note site with limited functionality, storing data in browser's LocalStorage                                                                                                                            |
 | quiz         | Fun, easy math quiz for practice                                                                                                                                                                        |
+
+## Concepts
+
+| Concept        | Description |
+| -------------- | ----------- |
+| multithreading | threadpool  |
