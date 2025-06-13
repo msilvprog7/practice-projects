@@ -25,7 +25,11 @@ export default function Home() {
   }
 
   if (pollId != null) {
-    const poll = polls[pollId];
+    const poll = polls.find((p) => p.id === pollId);
+    if (!poll) {
+      return <div className="app">Poll not found</div>;
+    }
+
     return (
       <div className="app">
         <div className="section">
