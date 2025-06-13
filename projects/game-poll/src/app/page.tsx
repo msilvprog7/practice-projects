@@ -1,19 +1,20 @@
+"use client";
+
 import { useEffect, useState } from "react";
-import "./App.css";
 import PollCreator from "./components/PollCreator";
 import PollList from "./components/PollList";
 import PollResults from "./components/PollResults";
 import VotingForm from "./components/VotingForm";
 import { usePolls } from "./hooks/PollHooks";
 
-export default function App() {
+export default function Home() {
   const { polls, loading, error, createPoll, votePoll, fetchPolls } =
     usePolls();
   const [pollId, setPollId] = useState<number | null>(null);
 
   useEffect(() => {
     fetchPolls();
-  }, []);
+  }, [fetchPolls]);
 
   if (loading && polls.length === 0) {
     return <div className="app">Loading polls...</div>;
