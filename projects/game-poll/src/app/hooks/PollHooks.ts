@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Poll } from "../types";
+import { Poll } from "@/app/types";
 import PollService from "../services/PollService";
 
 export function usePolls() {

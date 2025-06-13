@@ -1,5 +1,7 @@
+"use client";
+
 import { useState } from "react";
-import { Poll } from "../types";
+import { Poll } from "@/app/types";
 
 interface VotingFormProps {
   poll: Poll;

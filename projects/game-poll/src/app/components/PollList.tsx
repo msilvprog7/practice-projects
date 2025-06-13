@@ -1,4 +1,6 @@
-import { Poll } from "../types";
+"use client";
+
+import { Poll } from "@/app/types";
 
 interface PollListProps {
   polls: Poll[];
