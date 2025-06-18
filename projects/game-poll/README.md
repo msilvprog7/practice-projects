@@ -52,17 +52,53 @@ cd game-poll
 npm install
 ```
 
-2. **Environment Configuration**
+2. **Twitch App Setup (for IGDB Game API)**
+
+The application uses the IGDB API to fetch game suggestions. You'll need to create a Twitch application to get API credentials.
+
+### 2.1: Create Twitch Developer Account
+
+1. Go to [Twitch Developer Console](https://dev.twitch.tv/console)
+2. Log in with your Twitch account (create one if needed)
+3. Accept the Developer Agreement
+
+### 2.2: Create New Application
+
+1. Click **"Register Your Application"**
+2. Fill out the application form:
+   - **Name**: `Game Poll App` (or any name you prefer)
+   - **OAuth Redirect URLs**: `http://localhost:3000` (for development)
+   - **Category**: `Game Integration`
+   - **Client Type**: `Confidential`
+3. Complete the CAPTCHA and click **"Create"**
+
+### 2.3: Get Your Credentials
+
+1. After creation, click **"Manage"** on your new application
+2. Copy the **Client ID** and **Client Secret**
+3. Keep these credentials secure - never commit them to version control
+
+4. **Environment Configuration**
 
 Create a `.env` file in the root directory:
 
 ```env
+# Database
 DATABASE_URL="postgresql://username:password@localhost:5432/gamepool"
+
+# Twitch/IGDB API Credentials
+IGDB_CLIENT_ID=your_client_id_here
+IGDB_CLIENT_SECRET=your_client_secret_here
 ```
 
-Replace `username`, `password` with your actual credentials.
+### Important Notes:
 
-3. **Prisma Setup**
+- Replace `username`, `password` with your actual PostgreSQL credentials
+- Replace `your_client_id_here` and `your_client_secret_here` with your actual Twitch app credentials
+- **Never commit the `.env` file** - it's already in `.gitignore`
+- **Keep your Client Secret secure** - it's used server-side only
+
+4. **Prisma Setup**
 
 ```bash
 # Generate Prisma client
@@ -288,6 +324,31 @@ npx prisma migrate reset
 - **Wrong DATABASE_URL** - Check credentials and database name
 - **Permission issues** - Ensure user has CREATE privileges
 - **Database doesn't exist** - Create the database first: `CREATE DATABASE gamepool;`
+
+### IGDB API Issues:
+
+#### 401 Authentication Error
+
+1. **Verify Twitch credentials** in your `.env` file
+2. **Check Client ID and Secret** from Twitch Developer Console
+3. **Restart development server** after updating `.env`
+4. **Test token generation manually**:
+   ```bash
+   curl -X POST 'https://id.twitch.tv/oauth2/token' \
+   -H 'Content-Type: application/x-www-form-urlencoded' \
+   -d 'client_id=YOUR_CLIENT_ID&client_secret=YOUR_CLIENT_SECRET&grant_type=client_credentials'
+   ```
+
+#### Test IGDB API Connection
+
+Visit `http://localhost:3000/api/test-token` after starting the dev server to verify your credentials.
+
+#### Common IGDB Issues:
+
+- **Twitch app not approved**: Make sure your Twitch application status is "Active"
+- **Wrong redirect URL**: Ensure `http://localhost:3000` is in your Twitch app's OAuth redirect URLs
+- **Rate limiting**: IGDB API has rate limits - avoid making too many requests quickly
+- **Environment variables not loaded**: Restart dev server after adding credentials to `.env`
 
 ## Learn More
 

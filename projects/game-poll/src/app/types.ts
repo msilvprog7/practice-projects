@@ -19,3 +19,7 @@ export interface StoredPollAnswer {
   text: string;
   votes: number;
 }
+
+export interface GameSuggestion {
+  name: string;
+}
