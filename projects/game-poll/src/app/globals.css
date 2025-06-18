@@ -44,6 +44,7 @@ input[type="text"] {
   font-size: 0.75em;
   padding: 0.5rem;
   border-radius: 4px;
+  width: 100%;
 }
 
 button {
@@ -68,4 +69,52 @@ a {
 a:hover {
   color: #0066cc;
   text-decoration: underline;
+}
+
+/* Input container for positioning context */
+.input-container {
+  position: relative;
+  width: 100%;
+}
+
+/* Floating suggestions dropdown */
+.suggestions-dropdown {
+  position: absolute;
+  top: 100%; /* Position below the input */
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  margin-top: 4px; /* Small gap below input */
+}
+
+.suggestions-dropdown li {
+  padding: 0.5rem;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+  list-style: none;
+}
+
+.suggestions-dropdown li:hover {
+  background-color: #f5f5f5;
+}
+
+.suggestions-dropdown li:last-child {
+  border-bottom: none;
+}
+
+/* Reset ul margins for suggestions */
+.suggestions-dropdown {
+  margin: 0;
+  padding: 0;
+}
+
+.suggestions-dropdown li.selected {
+  background-color: #e3f2fd;
+  color: #1976d2;
 }
