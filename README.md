@@ -30,19 +30,26 @@ dotnet build
 dotnet run
 ```
 
+Java projects follow this setup to run console applications:
+
+```cmd
+java src/Main.java
+```
+
 ## Projects
 
-| Project      | Description                                                                                                                                                                                             |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| book-finder  | Searches Google Books to return the top 10 results. Requires `REACT_APP_GOOGLE_BOOKS_API_KEY` in `.env.local`, create keys at [Google Cloud Console](https://console.cloud.google.com/apis/credentials) |
-| calculator   | Basic calculator with limited functionality                                                                                                                                                             |
-| drawing      | Simple drawing pad that supports multiple colors and brush sizes                                                                                                                                        |
-| emoji        | Translator of text to emojis with a finite set of supported words                                                                                                                                       |
-| first-db-app | Site that uses IndexedDB to load and query an in-browser database                                                                                                                                       |
-| flash-cards  | Flash card site with questions made up from my currently studied topics                                                                                                                                 |
-| game-poll    | Work-in-progress app for creating polls with LocalStorage; I'm planning to add an API and database                                                                                                      |
-| notes        | Note site with limited functionality, storing data in browser's LocalStorage                                                                                                                            |
-| quiz         | Fun, easy math quiz for practice                                                                                                                                                                        |
+| Project       | Description                                                                                                                                                                                             |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| book-finder   | Searches Google Books to return the top 10 results. Requires `REACT_APP_GOOGLE_BOOKS_API_KEY` in `.env.local`, create keys at [Google Cloud Console](https://console.cloud.google.com/apis/credentials) |
+| calculator    | Basic calculator with limited functionality                                                                                                                                                             |
+| cli-todo-list | Simple todo list in java to get reacquainted with the programming language                                                                                                                              |
+| drawing       | Simple drawing pad that supports multiple colors and brush sizes                                                                                                                                        |
+| emoji         | Translator of text to emojis with a finite set of supported words                                                                                                                                       |
+| first-db-app  | Site that uses IndexedDB to load and query an in-browser database                                                                                                                                       |
+| flash-cards   | Flash card site with questions made up from my currently studied topics                                                                                                                                 |
+| game-poll     | Work-in-progress app for creating polls with LocalStorage; I'm planning to add an API and database                                                                                                      |
+| notes         | Note site with limited functionality, storing data in browser's LocalStorage                                                                                                                            |
+| quiz          | Fun, easy math quiz for practice                                                                                                                                                                        |
 
 ## Concepts
 
