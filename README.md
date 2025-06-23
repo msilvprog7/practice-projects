@@ -48,6 +48,7 @@ java src/Main.java
 | first-db-app  | Site that uses IndexedDB to load and query an in-browser database                                                                                                                                       |
 | flash-cards   | Flash card site with questions made up from my currently studied topics                                                                                                                                 |
 | game-poll     | Work-in-progress app for creating polls with LocalStorage; I'm planning to add an API and database                                                                                                      |
+| habit-tracker | Track your habits and get a summary of your progress. CLI and Spring Boot REST service in java.                                                                                                         |
 | notes         | Note site with limited functionality, storing data in browser's LocalStorage                                                                                                                            |
 | quiz          | Fun, easy math quiz for practice                                                                                                                                                                        |
 
