@@ -1,3 +1,5 @@
+package com.msnider.habittracker;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -36,7 +38,7 @@ public class HabitList {
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
         for (Habit habit : this.habits.values()) {
           String name = habit.getName();
-          Iterator<LocalDateTime> it = habit.getIterator();
+          Iterator<LocalDateTime> it = habit.iterator();
           while (it.hasNext()) {
             writer.write(this.formatLine(new AbstractMap.SimpleEntry<>(name, it.next())));
             writer.newLine();
@@ -47,12 +49,13 @@ public class HabitList {
     }
   }
 
-  public void addHabit(Entry<String, LocalDateTime> entry) {
+  public Habit addHabit(Entry<String, LocalDateTime> entry) {
     String name = entry.getKey();
     LocalDateTime dt = entry.getValue();
     Habit habit = this.habits.getOrDefault(name, new Habit(this.formatter, name));
     habit.track(dt);
     this.habits.put(name, habit);
+    return habit;
   }
 
   public Collection<Habit> getHabits() {

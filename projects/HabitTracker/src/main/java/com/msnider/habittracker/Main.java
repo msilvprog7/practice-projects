@@ -1,3 +1,5 @@
+package com.msnider.habittracker;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -13,15 +15,15 @@ public class Main {
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in);
     boolean exited = false;
-    HabitList habitList = new HabitList(formatter);
-    habitList.readHabits(filename);
+    HabitList HabitList = new HabitList(formatter);
+    HabitList.readHabits(filename);
 
     System.out.print("Hi! ");
 
     while (!exited) {
       System.out.println("What would you like to do next?");
       System.out.println("- list");
-      System.out.println("- add <habit> <datetime>");
+      System.out.println("- add <Habit> <datetime>");
       System.out.println("- summary");
       System.out.println("- exit");
       System.out.println();
@@ -32,33 +34,33 @@ public class Main {
       
       switch (tokens[0].toLowerCase()) {
         case "list" -> {
-          Collection<Habit> habits = habitList.getHabits();
-          int size = habits.size();
-          System.out.println("You have " + size + " habit" + (size != 1 ? "s" : "") + ".");
-          for (Habit habit : habits) {
-            System.out.println("- " + habit);
+          Collection<Habit> Habits = HabitList.getHabits();
+          int size = Habits.size();
+          System.out.println("You have " + size + " Habit" + (size != 1 ? "s" : "") + ".");
+          for (Habit Habit : Habits) {
+            System.out.println("- " + Habit);
           }
           System.out.println();
         }
         case "add" -> {
           try {
             String line = String.join(" ", Arrays.copyOfRange(tokens, 1, tokens.length));
-            habitList.addHabit(habitList.parseEntry(line));
+            HabitList.addHabit(HabitList.parseEntry(line));
           } catch (DateTimeParseException dtpe) {
             System.out.println(dtpe);
-            System.out.println("Sorry, add needs a <habit> and <datetime>.");
+            System.out.println("Sorry, add needs a <Habit> and <datetime>.");
             System.out.println();
           }
 
-          habitList.writeHabits(filename);
+          HabitList.writeHabits(filename);
         }
         case "summary" -> {
-          Collection<Habit> habits = habitList.getHabits();
-          int size = habits.size();
-          System.out.println("You have " + size + " habit" + (size != 1 ? "s" : "") + ".");
-          for (Habit habit : habits) {
+          Collection<Habit> Habits = HabitList.getHabits();
+          int size = Habits.size();
+          System.out.println("You have " + size + " Habit" + (size != 1 ? "s" : "") + ".");
+          for (Habit Habit : Habits) {
             int count = 0;
-            Iterator<LocalDateTime> it = habit.getIterator();
+            Iterator<LocalDateTime> it = Habit.iterator();
             LocalDateTime dt = LocalDateTime.now();
 
             while (it.hasNext()) {
@@ -68,7 +70,7 @@ public class Main {
               }
             }
 
-            System.out.println("- " + habit.getName() + ", Count this month: " + count);
+            System.out.println("- " + Habit.getName() + ", Count this month: " + count);
           }
           System.out.println();
         }
