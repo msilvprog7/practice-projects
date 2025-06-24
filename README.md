@@ -36,6 +36,17 @@ Java projects follow this setup to run console applications:
 java src/Main.java
 ```
 
+Java projects with Maven and Spring Boot will run command line
+tool and service like this:
+
+```cmd
+// 1. Run command line tool
+java ./src/main/java/com/msnider/habittracker/Main.java
+
+// 2. Run spring boot service
+mvn spring-boot:run
+```
+
 ## Projects
 
 | Project       | Description                                                                                                                                                                                             |

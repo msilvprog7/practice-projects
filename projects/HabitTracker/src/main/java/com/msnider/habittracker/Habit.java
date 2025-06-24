@@ -1,6 +1,10 @@
+package com.msnider.habittracker;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -19,7 +23,13 @@ public class Habit {
     return this.name;
   }
 
-  public Iterator<LocalDateTime> getIterator() {
+  public List<LocalDateTime> getDates() {
+    List<LocalDateTime> dates = new ArrayList<>();
+    this.iterator().forEachRemaining(dates::add);
+    return dates;
+  }
+
+  public Iterator<LocalDateTime> iterator() {
     return this.tracker.iterator();
   }
 

@@ -6,7 +6,7 @@ and then turn it into a REST service with Spring Boot.
 ## CLI application
 
 ```cmd
-java ./src/Main.java
+java ./src/main/java/com/msnider/habittracker/Main.java
 ```
 
 Then the application will ask you for your next command.
@@ -30,8 +30,12 @@ The idea is to then keep the habits in-memory and later
 a database, but first to replace CLI commands with
 Spring Boot REST-ful endpoints.
 
+```cmd
+mvn spring-boot:run
+```
+
 ```text
-GET /habits
-POST /habits
-GET /habits/summary
+GET /api/habits
+POST /api/habits
+GET /api/habits/summary
 ```
