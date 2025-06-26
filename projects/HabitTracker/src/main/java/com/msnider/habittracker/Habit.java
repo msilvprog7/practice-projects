@@ -1,44 +1,42 @@
 package com.msnider.habittracker;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-public class Habit {
-  private final DateTimeFormatter formatter;
+public class Habit implements Iterable<HabitEntry> {
   private final String name;
-  private final SortedSet<LocalDateTime> tracker;
+  private final SortedSet<HabitEntry> tracker;
 
-  public Habit(DateTimeFormatter formatter, String name) {
-    this.formatter = formatter;
+  public Habit(String name) {
     this.name = name;
-    this.tracker = new TreeSet<>();
+    this.tracker = new TreeSet<>((a, b) -> a.getDateTime().compareTo(b.getDateTime()));
   }
 
   public String getName() {
     return this.name;
   }
 
-  public List<LocalDateTime> getDates() {
+  public List<LocalDateTime> getDateTimes() {
     List<LocalDateTime> dates = new ArrayList<>();
-    this.iterator().forEachRemaining(dates::add);
+    this.iterator().forEachRemaining(entry -> dates.add(entry.getDateTime()));
     return dates;
   }
 
-  public Iterator<LocalDateTime> iterator() {
-    return this.tracker.iterator();
+  public void track(HabitEntry entry) {
+    this.tracker.add(entry);
   }
-
-  public void track(LocalDateTime dt) {
-    this.tracker.add(dt);
+  
+  @Override
+  public Iterator<HabitEntry> iterator() {
+    return this.tracker.iterator();
   }
 
   @Override
   public String toString() {
-    return this.name + ", Count: " + this.tracker.size() + ", Most Recent: " + this.tracker.last().format(this.formatter);
+    return this.name + ", Count: " + this.tracker.size() + ", Most Recent: " + this.tracker.last().getDateTime().format(HabitList.formatter);
   }
 }

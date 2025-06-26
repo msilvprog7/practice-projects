@@ -1,8 +1,5 @@
 package com.msnider.habittracker;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/habits")
 public class HabittrackerApplication {
   private static final String filename = "habits.txt";
-  private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a");
-	private static final HabitList habitList = new HabitList(formatter);
+	private static final HabitList habitList = new HabitList();
 	
 	public static void main(String[] args) {
     HabittrackerApplication.habitList.readHabits(filename);
@@ -37,16 +33,13 @@ public class HabittrackerApplication {
 		return new ArrayList<>(HabittrackerApplication.habitList.getHabits());
 	}
 
-	// todo: update schema to support post
 	@PostMapping(consumes = "application/json", produces = "application/json")
-	public ResponseEntity<Habit> postHabit(@RequestBody Habit habit) {
-		String name = habit.getName();
-		LocalDateTime dt = habit.getDates().getFirst();
-		Habit updatedHabit = HabittrackerApplication.habitList.addHabit(new AbstractMap.SimpleEntry<>(name, dt));
+	public ResponseEntity<Habit> postHabit(@RequestBody HabitEntry habit) {
+		Habit updatedHabit = HabittrackerApplication.habitList.addHabit(habit);
 
 		HabittrackerApplication.habitList.writeHabits(filename);
 
-		HttpStatusCode statusCode = habit.getDates().size() == 1 ? HttpStatus.CREATED : HttpStatus.OK;
+		HttpStatusCode statusCode = updatedHabit.getDateTimes().size() == 1 ? HttpStatus.CREATED : HttpStatus.OK;
 		return new ResponseEntity<>(updatedHabit, statusCode);
 	}
 }
