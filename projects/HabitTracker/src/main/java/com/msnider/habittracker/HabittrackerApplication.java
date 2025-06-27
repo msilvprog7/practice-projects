@@ -1,7 +1,6 @@
 package com.msnider.habittracker;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,11 +25,21 @@ public class HabittrackerApplication {
 		SpringApplication.run(HabittrackerApplication.class, args);
 	}
 
-	// todo: update json schema to include habits field with list of habits
-	// todo: additional summary api
 	@GetMapping
-	public List<Habit> getHabits() {
-		return new ArrayList<>(HabittrackerApplication.habitList.getHabits());
+	public HabitList getHabits() {
+		return HabittrackerApplication.habitList;
+	}
+
+	@GetMapping("/summary")
+	public HabitSummaries getSummary() {
+		// Sort by most recent desc, a future improvement could add sort options in the request
+		return new HabitSummaries(HabittrackerApplication
+			.habitList
+			.getHabits()
+			.stream()
+			.map((habit) -> new HabitSummary(habit))
+			.sorted((a, b) -> -a.getMostRecent().compareTo(b.getMostRecent()))
+			.collect(Collectors.toList()));
 	}
 
 	@PostMapping(consumes = "application/json", produces = "application/json")

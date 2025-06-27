@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 public class Habit implements Iterable<HabitEntry> {
   private final String name;
@@ -28,6 +29,19 @@ public class Habit implements Iterable<HabitEntry> {
 
   public void track(HabitEntry entry) {
     this.tracker.add(entry);
+  }
+
+  public LocalDateTime last() {
+    return this.tracker.last().getDateTime();
+  }
+
+  public List<LocalDateTime> range(LocalDateTime start, LocalDateTime end) {
+    HabitEntry startEntry = new HabitEntry(this.name, start);
+    HabitEntry endEntry = new HabitEntry(this.name, end);
+    return this.tracker.subSet(startEntry, endEntry)
+      .stream()
+      .map(HabitEntry::getDateTime)
+      .collect(Collectors.toList());
   }
   
   @Override
