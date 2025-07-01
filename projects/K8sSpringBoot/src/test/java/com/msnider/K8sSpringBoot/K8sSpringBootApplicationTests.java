@@ -1,4 +1,4 @@
-package com.msnider.K8sSpringBoot;
+package com.msnider.k8sspringboot;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
