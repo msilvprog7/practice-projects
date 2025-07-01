@@ -1,4 +1,4 @@
-package com.msnider.K8sSpringBoot;
+package com.msnider.k8sspringboot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
