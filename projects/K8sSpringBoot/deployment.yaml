@@ -3,23 +3,23 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: demo
-  name: demo
+    app: k8sspringboot
+  name: k8sspringboot
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: demo
+      app: k8sspringboot
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: demo
+        app: k8sspringboot
     spec:
       containers:
-        - image: springguides/demo
-          name: demo
+        - image: k8sspringboot:0.0.1-SNAPSHOT
+          name: k8sspringboot
           resources: {}
 status: {}
 ---
@@ -28,8 +28,8 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    app: demo
-  name: demo
+    app: k8sspringboot
+  name: k8sspringboot
 spec:
   ports:
     - name: 8080-8080
@@ -37,7 +37,7 @@ spec:
       protocol: TCP
       targetPort: 8080
   selector:
-    app: demo
+    app: k8sspringboot
   type: ClusterIP
 status:
   loadBalancer: {}
