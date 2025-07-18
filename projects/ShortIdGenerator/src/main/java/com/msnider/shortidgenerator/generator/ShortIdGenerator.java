@@ -24,4 +24,29 @@ public class ShortIdGenerator {
 
     return sb.reverse().toString();
   }
+
+  public static long decode(String shortId) throws Exception {
+    // handle when null or empty
+    if (shortId == null || shortId.length() == 0) {
+      throw new Exception("Short id must be non-empty or null");
+    }
+
+    // decode character by character, in reverse
+    long sequence = 0;
+
+    for (int i = 0; i < shortId.length(); i++) {
+      Character current = shortId.charAt(i);
+      int index = CHARACTERS.indexOf(current);
+
+      if (index == -1) {
+        throw new Exception("Invalid character in short id, short id: " + shortId + ", i: " + i + ", current: " + current);
+      }
+
+      sequence *= BASE;
+      sequence += index;
+    }
+
+    // return value
+    return sequence;
+  }
 }

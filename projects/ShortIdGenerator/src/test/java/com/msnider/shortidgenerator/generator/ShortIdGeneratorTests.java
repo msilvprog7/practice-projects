@@ -59,12 +59,102 @@ public class ShortIdGeneratorTests {
   @Test
   public void testGenerateWithMaxSequence() throws Exception {
     // Arrange
-    long sequence = Long.MAX_VALUE - 1;
+    long sequence = Long.MAX_VALUE;
 
     // Act
     String result = ShortIdGenerator.generate(sequence);
 
     // Assert
-    assertEquals("wyVfWtYhZpk", result);
+    assertEquals("wyVfWtYhZpm", result);
+  }
+
+  @Test
+  public void testDecodeWithNull() throws Exception {
+    // Arrange
+    String shortId = null;
+
+    // Act
+    Exception exception = assertThrows(Exception.class, () -> {
+      ShortIdGenerator.decode(shortId);
+    });
+
+    // Assert
+    assertTrue(exception.getMessage().contains("Short id must be non-empty or null"));
+  }
+
+  @Test
+  public void testDecodeWithEmpty() throws Exception {
+    // Arrange
+    String shortId = "";
+
+    // Act
+    Exception exception = assertThrows(Exception.class, () -> {
+      ShortIdGenerator.decode(shortId);
+    });
+
+    // Assert
+    assertTrue(exception.getMessage().contains("Short id must be non-empty or null"));
+  }
+
+  @Test
+  public void testDecodeWithInvalidCharacter() throws Exception {
+    // Arrange
+    String shortId = "dqVOzeh";
+
+    // Act
+    Exception exception = assertThrows(Exception.class, () -> {
+      ShortIdGenerator.decode(shortId);
+    });
+
+    // Assert
+    assertTrue(exception.getMessage().contains("Invalid character in short id"));
+  }
+
+  @Test
+  public void testDecodeWithZeroSequence() throws Exception {
+    // Arrange
+    String shortId = "aaaaaa";
+
+    // Act
+    long sequence = ShortIdGenerator.decode(shortId);
+
+    // Assert
+    assertEquals(0, sequence);
+  }
+
+  @Test
+  public void testDecodeWithSmallSequence() throws Exception {
+    // Arrange
+    String shortId = "aaaabc";
+
+    // Act
+    long sequence = ShortIdGenerator.decode(shortId);
+
+    // Assert
+    assertEquals(60, sequence);
+  }
+
+  @Test
+  public void testDecodeWithLargeSequence() throws Exception {
+    // Arrange
+    String shortId = "dqVzeh";
+
+    // Act
+    long sequence = ShortIdGenerator.decode(shortId);
+
+    // Assert
+    assertEquals(Integer.MAX_VALUE, sequence);
+  }
+
+@Test
+  public void testDecodeWithMaxSequence() throws Exception {
+    // Arrange
+    String shortId = "wyVfWtYhZpm";
+
+    // Act
+    long sequence = ShortIdGenerator.decode(shortId);
+
+    // Assert
+    assertEquals(Long.MAX_VALUE, sequence);
   }
 }

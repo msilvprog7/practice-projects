@@ -10,6 +10,6 @@ public class ShortidgeneratorApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ShortidgeneratorApplication.class, args);
-	}
+	}	
 
 }
