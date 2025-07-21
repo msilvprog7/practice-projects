@@ -1,4 +1,4 @@
-package com.msnider.shortidgenerator;
+package com.msnider.shortidgenerator.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,21 +10,18 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.msnider.shortidgenerator.entity.Available;
-import com.msnider.shortidgenerator.entity.Generated;
 import com.msnider.shortidgenerator.generator.ShortIdGenerator;
-import com.msnider.shortidgenerator.repository.AvailableRepository;
-import com.msnider.shortidgenerator.repository.GeneratedRepository;
 
 @Service
 public class BackgroundTaskService {
   private static final Logger LOGGER = LoggerFactory.getLogger(BackgroundTaskService.class);
-  private static final int MIN_AVAILABLE = 100;
+  private static final int MIN_AVAILABLE = 10;
 
   @Autowired
-  private AvailableRepository availableRepository;
+  private AvailableService availableService;
 
   @Autowired
-  private GeneratedRepository generatedRepository;
+  private SequenceService sequenceService;
 
   // One issue presented here is that by reading the database
   // to determine how many to generate, it's possible that
@@ -35,33 +32,27 @@ public class BackgroundTaskService {
   public void run() {
     LOGGER.info("Background task is running, time: {}", System.currentTimeMillis());
 
-    List<Available> availableItems = this.availableRepository.findAll();
+    List<Available> availableItems = this.availableService.findAll();
     LOGGER.info("Found {} items in available collection", availableItems.size());
-
-    Generated latestGenerated = this.generatedRepository.findTopByOrderByGeneratedAtDesc().orElse(new Generated(-1, -1));
-    LOGGER.info("Latest sequence {}", latestGenerated.getLatestSequence());
     
     // Generate to keep minimum
     int toGenerate = Math.max(0, MIN_AVAILABLE - availableItems.size());
     if (toGenerate > 0) {
-      LOGGER.info("Generating {} short ids, latest sequence: {}", toGenerate, latestGenerated.getLatestSequence());
-
       try {
-          List<Available> generatedItems = new ArrayList<>();
-          long latestSequence = latestGenerated.getLatestSequence() + 1;
-          long nextLatestSequence = latestSequence + toGenerate;
+          // reserve sequence
+          long startSequence = this.sequenceService.getNextSequenceBlock(toGenerate);
+          LOGGER.info("Generating {} short ids, start sequence: {}", toGenerate, startSequence);
 
-          for (long sequence = latestSequence; sequence <= nextLatestSequence; sequence++) {
+          // generate sequences
+          List<Available> generatedItems = new ArrayList<>();
+
+          for (int i = 0; i < toGenerate; i++) {
+            long sequence = startSequence + i;
             String shortId = ShortIdGenerator.generate(sequence);
             generatedItems.add(new Available(shortId, System.currentTimeMillis()));
           }
-
-          // save generated entry first
-          this.generatedRepository.save(new Generated(nextLatestSequence, System.currentTimeMillis()));
-          LOGGER.info("Generated {} short ids, updated latest sequence {}", toGenerate, nextLatestSequence);
-
           // save items second
-          availableRepository.saveAll(generatedItems);
+          this.availableService.saveAll(generatedItems);
           LOGGER.info("Saved {} short ids", toGenerate);
       } catch (Exception e) {
         LOGGER.error("Failed to generate new short ids, exception: ", e);
