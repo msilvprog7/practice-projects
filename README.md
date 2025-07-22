@@ -62,6 +62,7 @@ mvn spring-boot:run
 | habit-tracker      | Track your habits and get a summary of your progress. CLI and Spring Boot REST service in java.                                                                                                         |
 | k8s-spring-boot    | Following a tutorial to learn how to setup spring boot with k8s                                                                                                                                         |
 | notes              | Note site with limited functionality, storing data in browser's LocalStorage                                                                                                                            |
+| otp-locker         | Design problem turned into a Redis integration                                                                                                                                                          |
 | quiz               | Fun, easy math quiz for practice                                                                                                                                                                        |
 | short-id-generator | Design practice problem turned into a MongoDB database                                                                                                                                                  |
 
