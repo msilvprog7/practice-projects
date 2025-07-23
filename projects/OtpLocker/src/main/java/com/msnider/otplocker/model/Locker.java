@@ -1,16 +1,16 @@
 package com.msnider.otplocker.model;
 
+import java.util.Optional;
+
 public class Locker {
   private String id;
-  private double width;
-  private double height;
-  private double depth;
+  private Dimensions dimensions;
+  private Optional<Package> dropOffPackage;
 
-  public Locker(String id, double width, double height, double depth) {
+  public Locker(String id, Dimensions dimensions) {
     this.id = id;
-    this.width = width;
-    this.height = height;
-    this.depth = depth;
+    this.dimensions = dimensions;
+    this.dropOffPackage = Optional.empty();
   }
 
   public String getId() {
@@ -21,27 +21,26 @@ public class Locker {
       this.id = id;
   }
 
-  public double getWidth() {
-      return width;
+  public Dimensions getDimensions() {
+      return this.dimensions;
   }
 
-  public void setWidth(double width) {
-      this.width = width;
+  public void setDimensions(Dimensions dimensions) {
+      this.dimensions = dimensions;
   }
 
-  public double getHeight() {
-      return height;
+  public boolean dropOffPackage(Package dropOffPackage) {
+    if (!this.dropOffPackage.isEmpty() || !this.dimensions.canFit(dropOffPackage.getDimensions())) {
+        return false;
+    }
+
+    this.dropOffPackage = Optional.ofNullable(dropOffPackage);
+    return true;
   }
 
-  public void setHeight(double height) {
-      this.height = height;
-  }
-
-  public double getDepth() {
-      return depth;
-  }
-
-  public void setDepth(double depth) {
-      this.depth = depth;
+  public Optional<Package> pickUpPackage() {
+    Optional<Package> pickUpPackage = this.dropOffPackage;
+    this.dropOffPackage = Optional.empty();
+    return pickUpPackage;
   }
 }

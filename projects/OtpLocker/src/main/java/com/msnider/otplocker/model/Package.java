@@ -1,16 +1,23 @@
 package com.msnider.otplocker.model;
 
+import com.msnider.otplocker.dto.DropOffPackage;
+
 public class Package {
   private String id;
-  private double width;
-  private double height;
-  private double depth;
+  private Dimensions dimensions;
 
-  public Package(String id, double width, double height, double depth) {
+  public Package(String id, Dimensions dimensions) {
     this.id = id;
-    this.width = width;
-    this.height = height;
-    this.depth = depth;
+    this.dimensions = dimensions;
+  }
+
+  public Package(DropOffPackage dropOffPackage) {
+    this.id = dropOffPackage.getId();
+    this.dimensions = new Dimensions(
+      dropOffPackage.getWidth(),
+      dropOffPackage.getHeight(),
+      dropOffPackage.getDepth()
+    );
   }
 
   public String getId() {
@@ -21,27 +28,11 @@ public class Package {
       this.id = id;
   }
 
-  public double getWidth() {
-      return width;
+  public Dimensions getDimensions() {
+      return this.dimensions;
   }
 
-  public void setWidth(double width) {
-      this.width = width;
-  }
-
-  public double getHeight() {
-      return height;
-  }
-
-  public void setHeight(double height) {
-      this.height = height;
-  }
-
-  public double getDepth() {
-      return depth;
-  }
-
-  public void setDepth(double depth) {
-      this.depth = depth;
+  public void setDimensions(Dimensions dimensions) {
+      this.dimensions = dimensions;
   }
 }
