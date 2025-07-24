@@ -1,23 +1,26 @@
 package com.msnider.otplocker.service;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class InMemoryOtpService implements OtpService<String> {
+public class RedisOtpService implements OtpService<String> {
 
-  private final Map<String, String> otpsToLockers;
   private final Random random;
   private final int length;
+  private final String prefix;
 
-  public InMemoryOtpService() {
-    this.otpsToLockers = new HashMap<>();
+  @Autowired
+  private RedisTemplate<String, String> redisTemplate;
+
+  public RedisOtpService() {
     this.random = new Random();
     this.length = 6;
+    this.prefix = "otp:";
   }
   
   @Override
@@ -26,20 +29,27 @@ public class InMemoryOtpService implements OtpService<String> {
     String otp = null;
     do { 
         otp = this.generateOtp();
-    } while (this.otpsToLockers.containsKey(otp));
+    } while (this.redisTemplate.opsForValue().get(this.getKey(otp)) != null);
 
     // store the locker id
-    this.otpsToLockers.put(otp, value);
+    this.redisTemplate.opsForValue().set(this.getKey(otp), value);
     return otp;
   }
 
   @Override
   public Optional<String> unlock(String otp) {
-    if (!this.otpsToLockers.containsKey(otp)) {
+    String key = this.getKey(otp);
+    String lockerId = this.redisTemplate.opsForValue().get(key);
+    if (lockerId == null) {
       return Optional.empty();
     }
 
-    return Optional.ofNullable(this.otpsToLockers.remove(otp));
+    this.redisTemplate.delete(key);
+    return Optional.ofNullable(lockerId);
+  }
+
+  private String getKey(String otp) {
+    return this.prefix + otp;
   }
 
   private String generateOtp() {

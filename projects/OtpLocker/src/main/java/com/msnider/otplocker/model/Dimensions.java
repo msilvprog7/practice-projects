@@ -1,9 +1,15 @@
 package com.msnider.otplocker.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Dimensions {
   private double width;
   private double height;
   private double depth;
+
+  public Dimensions() {
+  }
 
   public Dimensions(double width, double height, double depth) {
     this.width = width;

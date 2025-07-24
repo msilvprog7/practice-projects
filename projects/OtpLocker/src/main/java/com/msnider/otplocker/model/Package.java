@@ -1,11 +1,16 @@
 package com.msnider.otplocker.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.msnider.otplocker.dto.DropOffPackage;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Package {
   private String id;
   private Dimensions dimensions;
 
+  public Package() {
+  }
+  
   public Package(String id, Dimensions dimensions) {
     this.id = id;
     this.dimensions = dimensions;
