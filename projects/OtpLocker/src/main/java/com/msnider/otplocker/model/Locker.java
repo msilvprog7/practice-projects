@@ -2,45 +2,63 @@ package com.msnider.otplocker.model;
 
 import java.util.Optional;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Locker {
   private String id;
   private Dimensions dimensions;
-  private Optional<Package> dropOffPackage;
+  private Package dropOffPackage;
+
+  public Locker() {
+  }
 
   public Locker(String id, Dimensions dimensions) {
     this.id = id;
     this.dimensions = dimensions;
-    this.dropOffPackage = Optional.empty();
+    this.dropOffPackage = null;
   }
 
   public String getId() {
-      return id;
+    return id;
   }
 
   public void setId(String id) {
-      this.id = id;
+    this.id = id;
   }
 
   public Dimensions getDimensions() {
-      return this.dimensions;
+    return this.dimensions;
   }
 
   public void setDimensions(Dimensions dimensions) {
-      this.dimensions = dimensions;
+    this.dimensions = dimensions;
+  }
+
+  public Package getDropOffPackage() {
+    return this.dropOffPackage;
+  }
+
+  public void setDropOffPackage(Package dropOffPackage) {
+    this.dropOffPackage = dropOffPackage;
   }
 
   public boolean dropOffPackage(Package dropOffPackage) {
-    if (!this.dropOffPackage.isEmpty() || !this.dimensions.canFit(dropOffPackage.getDimensions())) {
+    if (this.dropOffPackage != null || !this.dimensions.canFit(dropOffPackage.getDimensions())) {
         return false;
     }
 
-    this.dropOffPackage = Optional.ofNullable(dropOffPackage);
+    this.dropOffPackage = dropOffPackage;
     return true;
   }
 
   public Optional<Package> pickUpPackage() {
-    Optional<Package> pickUpPackage = this.dropOffPackage;
-    this.dropOffPackage = Optional.empty();
-    return pickUpPackage;
+    if (this.dropOffPackage == null) {
+      return Optional.empty();
+    }
+    
+    Package pickUpPackage = this.dropOffPackage;
+    this.dropOffPackage = null;
+    return Optional.ofNullable(pickUpPackage);
   }
 }
