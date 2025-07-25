@@ -1,0 +1,73 @@
+{
+	"info": {
+		"_postman_id": "001fa87f-99fd-49fe-b698-6e2383cb6373",
+		"name": "Otp Locker API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46167593",
+		"_collection_link": "https://michael-4304060.postman.co/workspace/Michael's-Workspace~a5e45f9b-6660-4754-8b45-4eba718aadfd/collection/46167593-001fa87f-99fd-49fe-b698-6e2383cb6373?action=share&source=collection_link&creator=46167593"
+	},
+	"item": [
+		{
+			"name": "Dropoff",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"1\",\n    \"width\": 1.0,\n    \"height\": 2.0,\n    \"depth\": 3.0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/lockers/v1/dropoff",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"lockers",
+						"v1",
+						"dropoff"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pickup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"otp\": \"925851\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/lockers/v1/pickup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"lockers",
+						"v1",
+						"pickup"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
