@@ -26,9 +26,19 @@ as cases in a switch statement. There is also support
 for pointers, structs, arrays, and slices. Slices are
 particularly interesting because they create views on
 top of arrays and can be adjusted later or declared
-and initialized with the underlying array too.
+and initialized with the underlying array too. There
+are a lot of options for creating types like slices,
+maps, and passing functions in methods.
 
-Next, I'll complete the sections on types, methods
-and interfaces, generics, and concurrency. After that,
-I'd like to go through a tutorial on Go and Gin, then
-GoCD.
+Interfaces allow for implicit implementations of
+types by describing which functions are required
+for the type. Specifically, using receiver arguments
+to describe functions for a specific receiver type.
+These allow for interesting ways to provide more
+nuanced types like stringers, errors, readers,
+and images with specific implementations of
+common functionality.
+
+Next, I'll complete the sections on generics, and
+concurrency. After that, I'd like to go through a
+tutorial on Go and Gin, then GoCD.

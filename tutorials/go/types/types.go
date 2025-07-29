@@ -1,10 +1,21 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+	"strings"
+
+	"golang.org/x/tour/pic"
+	"golang.org/x/tour/wc"
+)
 
 type Vertex struct {
 	X int
 	Y int
+}
+
+type Vertex2 struct {
+	Lat, Long float64
 }
 
 var (
@@ -16,6 +27,151 @@ var (
 
 func printSlice(s []int) {
 	fmt.Printf("len=%d cap=%d %v\n", len(s), cap(s), s)
+}
+
+func printSlice2(s string, x []int) {
+	fmt.Printf("%s len=%d cap=%d %v\n", s, len(x), cap(x), x)
+}
+
+func appendToSlice() {
+	var s []int
+	printSlice(s)
+
+	s = append(s, 0)
+	printSlice(s)
+
+	s = append(s, 1)
+	printSlice(s)
+
+	s = append(s, 2, 3, 4)
+	printSlice(s)
+}
+
+func tryRange() {
+	var pow = []int {1, 2, 4, 8, 16, 32, 64, 128}
+
+	for i, v := range pow {
+		fmt.Printf("2**%d = % d\n", i, v)
+	}
+
+	pow2 := make([]int, 10)
+	for i := range pow2 {
+		pow2[i] = 1 << uint(i) // == 2 ** i
+	}
+
+	for _, v := range pow2 {
+		fmt.Printf("%d\n", v)
+	}
+}
+
+func Pic(dx, dy int) [][]uint8 {
+	picture := make([][]uint8, dx)
+
+	for row := range picture {
+		picture[row] = make([]uint8, dy)
+	}
+
+	for row := range picture {
+		for col := range picture[row] {
+			picture[row][col] = uint8((row + col) / 2)
+		}
+	}
+
+	return picture
+}
+
+func maps() {
+	m := make(map[string]Vertex2)
+	m["Bell Labs"] = Vertex2{40.68433, -74.39967}
+	fmt.Println(m["Bell Labs"])
+
+	m2 := map[string]Vertex2{
+		"Bell Labs": Vertex2{
+			40.68433, -74.39967,
+		},
+		"Google": Vertex2{
+			37.42202, -122.08408,
+		},
+	}
+	fmt.Println(m2)
+
+	m3 := map[string]Vertex2{
+		"Bell Labs": {40.68433, -74.39967},
+		"Google": {37.42202, -122.08408},
+	}
+	fmt.Println(m3)
+
+	m4 := make(map[string]int)
+	m4["Answer"] = 42
+	fmt.Println("The value:", m4["Answer"])
+	m4["Answer"] = 48
+	fmt.Println("The value:", m4["Answer"])
+	delete(m4, "Answer")
+	fmt.Println("The value:", m4["Answer"])
+	v, ok := m4["Answer"]
+	fmt.Println("The value:", v, "Present?", ok)
+}
+
+func WordCount(s string) map[string]int {
+	wordCount := make(map[string]int)
+	words := strings.Fields(s)
+
+	for _, word := range words {
+		wordCount[word]++
+	}
+
+	return wordCount
+}
+
+func compute(fn func(float64, float64) float64) float64 {
+	return fn(3, 4)
+}
+
+func functionValues() {
+	hypot := func(x, y float64) float64 {
+		return math.Sqrt(x*x + y*y)
+	}
+	fmt.Println(hypot(5, 12))
+
+	fmt.Println(compute(hypot))
+	fmt.Println(compute(math.Pow))
+}
+
+func adder() func(int) int {
+	sum := 0
+	return func(x int) int {
+		sum += x
+		return sum
+	}
+}
+
+func functionClosures() {
+	pos, neg := adder(), adder()
+	for i := 0; i < 10; i++ {
+		fmt.Println(pos(i), neg(-2*i))
+	}
+}
+
+func fibonacci() func() int {
+	first := 0
+	second := 1
+	return func() int {
+		result := first
+
+		// update
+		third := first + second
+		first = second
+		second = third
+
+		return result
+	}
+}
+
+func testFibonacci() {
+	f := fibonacci()
+	for i := 0; i < 10; i++ {
+		fmt.Println(f())
+	}
 }
 
 func main() {
@@ -117,4 +273,41 @@ func main() {
 	if s5 == nil {
 		fmt.Println("nil!")
 	}
+
+	a3 := make([]int, 5)
+	printSlice2("a", a3)
+
+	b2 := make([]int, 0, 5)
+	printSlice2("b", b2)
+
+	c := b2[:2]
+	printSlice2("c", c)
+
+	d := c[2:5]
+	printSlice2("d", d)
+
+	board := [][]string {
+		[]string{"_", "_", "_"},
+		[]string{"_", "_", "_"},
+		[]string{"_", "_", "_"},
+	}
+
+	board[0][0] = "X"
+	board[2][2] = "O"
+	board[1][2] = "X"
+	board[1][0] = "O"
+	board[0][2] = "X"
+
+	for i := 0; i < len(board); i++ {
+		fmt.Printf("%s\n", strings.Join(board[i], " "))
+	}
+
+	appendToSlice()
+	tryRange()
+	pic.Show(Pic)
+	maps()
+	wc.Test(WordCount)
+	functionValues()
+	functionClosures()
+	testFibonacci()
 }
