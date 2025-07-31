@@ -39,6 +39,12 @@ nuanced types like stringers, errors, readers,
 and images with specific implementations of
 common functionality.
 
-Next, I'll complete the sections on generics, and
-concurrency. After that, I'd like to go through a
-tutorial on Go and Gin, then GoCD.
+Generics are supported by providing `[T any]`
+or supporting a constraint like `[T comparable]`.
+This can be applied to functions or types.
+
+Concurrency is well supported with the keyword `go`,
+channels to message pass, and synchronization objects
+like mutexes and wait groups.
+
+Next up, Go and Gin, then GoCD!
