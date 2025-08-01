@@ -47,4 +47,28 @@ Concurrency is well supported with the keyword `go`,
 channels to message pass, and synchronization objects
 like mutexes and wait groups.
 
-Next up, Go and Gin, then GoCD!
+<https://go.dev/doc/tutorial/web-service-gin>
+
+Gin is a web service framework that supports
+routing for JSON endpoints. It makes it easy
+to create endpoints to support RESTful APIs.
+
+Curl commands useful to test:
+
+```cmd
+curl http://localhost:8080/albums
+
+curl http://localhost:8080/albums/2
+
+curl http://localhost:8080/albums \
+    --include \
+    --header "Content-Type: application/json" \
+    --request "POST" \
+    --data '{"id": "4","title": "The Modern Sound of Betty Carter","artist": "Betty Carter","price": 49.99}'
+```
+
+The website includes examples for more complex
+behavior like how to setup middleware, customize
+input, and deploy a gin web service.
+
+Next up, GoCD!
