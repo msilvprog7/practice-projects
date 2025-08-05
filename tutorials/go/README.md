@@ -112,3 +112,36 @@ of one another and thus run non-sequentially in
 parallel. Materials can include pipelines to make
 pipelines dependent on one another for more complex
 pipelines like fan-in and fan-out.
+
+Artifacts are files or directories created when the
+pipeline runs. Pipelines can depend on the artifacts
+of other pipelines. Pipelines can reference artifacts
+from ancestor pipelines which supports the concept
+of only building once to avoid issues re-building
+in various places and environments in the pipeline.
+
+Custom tabs are used to display output files as
+their own tab in the job run. For instance, the
+tutorial has an html artifact that can be displayed
+as a custom tab. Updating it can then be displayed
+on previous job runs.
+
+Value stream map (VSM) is an end-to-end deployment
+pipeline that offers abstraction, build once,
+parallelization, and traceability. Fan-out describes
+when there are multiple pipelines that depend on
+a pipeline (1 to N) like a material. Fan-in describes
+when a pipeline depends on multiple pipelines (N to 1)
+where its important that the versions are consistent
+to trigger the dependent pipeline. It's important
+that GoCD offers correctness and quicker feedback
+during a deployment.
+
+There are also more advanced features like
+source control for pipelines (json or yaml),
+running on a kubernetes cluster, and elastic
+agents.
+
+<https://docs.gocd.org/current/gocd_on_kubernetes/introduction.html>
+
+Next, I'll look at running this on a kubernetes cluster.

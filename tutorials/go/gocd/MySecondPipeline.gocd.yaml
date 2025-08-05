@@ -1,0 +1,38 @@
+format_version: 10
+pipelines:
+  MySecondPipeline:
+    group: defaultGroup
+    label_template: ${COUNT}
+    lock_behavior: none
+    display_order: -1
+    materials:
+      MyFirstPipeline:
+        ignore_for_scheduling: false
+        pipeline: MyFirstPipeline
+        stage: defaultStage
+    stages:
+    - defaultStage:
+        fetch_materials: true
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+          allow_only_on_success: false
+        jobs:
+          defaultJob:
+            timeout: 0
+            tasks:
+            - fetch:
+                is_file: true
+                source: my-artifact.html
+                destination: ''
+                pipeline: MyFirstPipeline
+                stage: defaultStage
+                job: defaultjob
+                artifact_origin: gocd
+                run_if: passed
+            - exec:
+                arguments:
+                - my-artifact.html
+                command: cat
+                run_if: passed
