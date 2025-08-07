@@ -144,4 +144,8 @@ agents.
 
 <https://docs.gocd.org/current/gocd_on_kubernetes/introduction.html>
 
-Next, I'll look at running this on a kubernetes cluster.
+GoCD server and agents can run on a kubernetes cluster as well.
+The tutorial goes through running minikube to run the server
+and agent. I'm currently setting up some pre-requisites to
+ensure the kubernetes cluster can authenticate and authorize
+to docker hub to use the registry for publishing artifacts.
