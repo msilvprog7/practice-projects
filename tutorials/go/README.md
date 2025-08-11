@@ -146,6 +146,74 @@ agents.
 
 GoCD server and agents can run on a kubernetes cluster as well.
 The tutorial goes through running minikube to run the server
-and agent. I'm currently setting up some pre-requisites to
-ensure the kubernetes cluster can authenticate and authorize
-to docker hub to use the registry for publishing artifacts.
+and agent.
+
+```cmd
+minikube start
+
+helm repo add gocd https://gocd.github.io/helm-chart
+helm repo update
+
+helm install gocd gocd/gocd --namespace gocd --create-namespace
+
+kubectl get svc --all-namespaces
+minikube service gocd-server -n gocd
+```
+
+Once you setup your Docker Hub account, you can setup an
+Artifact Store on the GoCD server. For the next step, I had
+to setup a service account and create a secret token:
+
+```cmd
+kubectl create serviceaccount my-api-user
+kubectl create clusterrolebinding my-api-user-binding \
+  --clusterrole=cluster-admin \
+  --serviceaccount=default:my-api-user
+```
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-api-user-token
+  annotations:
+    kubernetes.io/service-account.name: my-api-user
+type: kubernetes.io/service-account-token
+```
+
+```cmd
+kubectl apply -f token-secret.yaml
+kubectl get secret my-api-user-token -o jsonpath="{.data.token}" | base64 --decode
+```
+
+Then I could apply it in the secrets-for-gocd.yaml.
+If you're using a personal account, use the same
+base64 encoding of your username as the DOCKERHUB_ORG.
+The rest of the steps ensured I had an Elastic Profile
+with access to the local k8s cluster and used the
+configuration for the bulletin board project from git.
+I did need to add a rule to allow pipeline group sample.
+
+I am still debugging the agents building the steps.
+It seems like there's an issue with java version
+for the build steps:
+
+```text
+jvm 1    | Caused by: java.lang.UnsupportedClassVersionError: com/thoughtworks/go/agent/launcher/AgentLauncherImpl has been compiled by a more recent version of the Java Runtime (class file version 61.0), this version of the Java Runtime only recognizes class file versions up to 59.0
+jvm 1    | 	at java.base/java.lang.ClassLoader.defineClass1(Native Method)
+jvm 1    | 	at java.base/java.lang.ClassLoader.defineClass(Unknown Source)
+jvm 1    | 	at java.base/java.security.SecureClassLoader.defineClass(Unknown Source)
+jvm 1    | 	at java.base/java.net.URLClassLoader.defineClass(Unknown Source)
+jvm 1    | 	at java.base/java.net.URLClassLoader$1.run(Unknown Source)
+jvm 1    | 	at java.base/java.net.URLClassLoader$1.run(Unknown Source)
+jvm 1    | 	at java.base/java.security.AccessController.doPrivileged(Unknown Source)
+jvm 1    | 	at java.base/java.net.URLClassLoader.findClass(Unknown Source)
+jvm 1    | 	at java.base/java.lang.ClassLoader.loadClass(Unknown Source)
+jvm 1    | 	at java.base/java.lang.ClassLoader.loadClass(Unknown Source)
+jvm 1    | 	at com.thoughtworks.go.agent.bootstrapper.DefaultAgentLauncherCreatorImpl.loadClass(DefaultAgentLauncherCreatorImpl.java:68)
+jvm 1    | 	at com.thoughtworks.go.agent.bootstrapper.DefaultAgentLauncherCreatorImpl.createLauncher(DefaultAgentLauncherCreatorImpl.java:58)
+jvm 1    | 	at com.thoughtworks.go.agent.bootstrapper.AgentBootstrapper.go(AgentBootstrapper.java:73)
+jvm 1    | 	at com.thoughtworks.go.agent.bootstrapper.AgentBootstrapper.lambda$main$0(AgentBootstrapper.java:57)
+jvm 1    | 	at com.thoughtworks.go.logging.LogConfigurator.runWithLogger(LogConfigurator.java:53)
+jvm 1    | 	at com.thoughtworks.go.agent.bootstrapper.AgentBootstrapper.main(AgentBootstrapper.java:57)
+```
