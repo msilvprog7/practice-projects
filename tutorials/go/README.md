@@ -217,3 +217,70 @@ jvm 1    | 	at com.thoughtworks.go.agent.bootstrapper.AgentBootstrapper.lambda$m
 jvm 1    | 	at com.thoughtworks.go.logging.LogConfigurator.runWithLogger(LogConfigurator.java:53)
 jvm 1    | 	at com.thoughtworks.go.agent.bootstrapper.AgentBootstrapper.main(AgentBootstrapper.java:57)
 ```
+
+To address the error, I started trying out updating
+the PATH to use the gocd-jre from the elastic go agent
+yaml:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-name-prefix-{{ POD_POSTFIX }}
+  labels:
+    app: web
+spec:
+  containers:
+    - name: gocd-agent-container-{{ CONTAINER_POSTFIX }}
+      image: gocd/gocd-agent-docker-dind:v25.3.0
+      command: ["/bin/sh", "-c"]
+      args:
+        - |
+          export PATH="$PATH:/gocd-jre/bin" && \
+          echo "Verifying Java Runtime version..." && \
+          java -version && \
+          echo "Starting docker entry point..." && \
+          exec /docker-entrypoint.sh
+      env:
+        - name: KUBE_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: secrets-for-gocd
+              key: K8S_API_TOKEN
+        - name: DOCKERHUB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: secrets-for-gocd
+              key: DOCKERHUB_USERNAME
+        - name: DOCKERHUB_ORG
+          valueFrom:
+            secretKeyRef:
+              name: secrets-for-gocd
+              key: DOCKERHUB_ORG
+        - name: NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+      securityContext:
+        runAsUser: 0
+        privileged: true
+```
+
+The following commands have been useful to explore
+the images and how they're setup:
+
+```cmd
+docker run -it --rm --privileged gocd/gocd-agent-docker-dind:v25.3.0 /bin/sh
+
+docker pull gocd/gocd-agent-docker-dind:v25.3.0
+docker image inspect gocd/gocd-agent-docker-dind:v25.3.0
+```
+
+Next, I need to understand why the deployment step
+failed. I wonder if it's unable to access the
+local kubernetes cluster:
+
+```text
+Creating deployment
+curl: (22) The requested URL returned error: 404
+```
