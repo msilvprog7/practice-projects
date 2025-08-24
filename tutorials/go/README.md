@@ -284,3 +284,12 @@ local kubernetes cluster:
 Creating deployment
 curl: (22) The requested URL returned error: 404
 ```
+
+I debugged some more and made sure to create a cluster role binding,
+however, some of the `app-deployment.sh` kubernetes api curl commands
+reference a `v1beta2` path that no longer exists. I'll leave the
+tutorial here as I've learned a lot about gocd.
+
+```cmd
+kubectl apply -f gocd-cluster-admin.yaml
+```
